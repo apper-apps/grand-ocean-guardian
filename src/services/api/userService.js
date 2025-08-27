@@ -4,7 +4,7 @@ let users = [...usersData];
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const userService = {
-  async getCurrentUser() {
+async getCurrentUser() {
     await delay(300);
     // Simulate logged in user (first user in mock data)
     const currentUser = users.find(user => user.Id === 1);
@@ -57,13 +57,49 @@ export const userService = {
     return { ...users[userIndex] };
   },
 
-  async addXP(userId, xpAmount) {
+async addXP(userId, xpAmount) {
     await delay(100);
     const userIndex = users.findIndex(user => user.Id === userId);
     if (userIndex === -1) throw new Error("User not found");
     
-users[userIndex].totalXP += xpAmount;
+    users[userIndex].totalXP += xpAmount;
     return { ...users[userIndex] };
+  },
+
+  // Adaptive Learning Analytics
+  async getUserLearningProgress(userId) {
+    await delay(200);
+    // Mock user learning analytics
+    return {
+      currentLevel: 3,
+      accuracy: 78,
+      totalTime: 145,
+      completedQuizzes: [1, 2],
+      strugglingTopics: ["conservation"],
+      strongTopics: ["marine-biology"],
+      pathProgress: {
+        1: { completed: 3, total: 8 },
+        2: { completed: 1, total: 12 },
+        3: { completed: 0, total: 15 }
+      },
+      categoryProgress: {
+        "marine-biology": 85,
+        "conservation": 45,
+        "marine-science": 20
+      },
+      improvementRate: 12,
+      streakDays: 5,
+      averageTime: 32,
+      adaptiveScore: 245,
+      difficultyLevel: 3
+    };
+  },
+
+  async updateLearningAnalytics(userId, performanceMetrics) {
+    await delay(150);
+    // Mock learning analytics update
+    console.log("Learning analytics updated:", performanceMetrics);
+    return { success: true };
   },
 
   async addLifelineTokens(userId, amount) {

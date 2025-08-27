@@ -10,7 +10,12 @@ import ApperIcon from "@/components/ApperIcon";
 import { cn } from "@/utils/cn";
 import { quizService } from "@/services/api/quizService";
 import { userService } from "@/services/api/userService";
-
+// Track performance for adaptive learning
+  const [performanceData, setPerformanceData] = useState({
+    startTime: Date.now(),
+    answerTimes: [],
+    difficultyAdjustment: null
+  });
 const QuizInterface = ({ quizId, onComplete }) => {
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -61,12 +66,26 @@ const QuizInterface = ({ quizId, onComplete }) => {
     }
   };
 
-  const submitQuiz = async () => {
+const submitQuiz = async () => {
     setSubmitting(true);
 
     try {
       const answers = Array.from({ length: quiz.questions.length }, (_, i) => selectedAnswers[i]);
       const result = await quizService.submitQuizResult(1, quizId, answers);
+      
+      // Track performance data for adaptive learning
+      const completionTime = Date.now() - performanceData.startTime;
+      const performanceMetrics = {
+        completionTime: Math.round(completionTime / 1000), // in seconds
+        answerTimes: performanceData.answerTimes,
+        accuracy: (result.correctAnswers / result.totalQuestions) * 100,
+        difficulty: quiz.difficulty,
+        category: quiz.category,
+        struggledQuestions: result.results.filter(r => !r.isCorrect).map(r => r.questionIndex)
+      };
+      
+      // Submit performance data for adaptive learning
+      await userService.updateLearningAnalytics(1, performanceMetrics);
       
       // Award XP to user
       if (result.xpEarned > 0) {
@@ -76,7 +95,12 @@ const QuizInterface = ({ quizId, onComplete }) => {
       setResults(result);
       setShowResults(true);
       
-      toast.success(`Quiz completed! +${result.xpEarned} XP earned`);
+      // Enhanced feedback based on performance
+      const accuracyMessage = result.score >= 90 ? "Outstanding!" : 
+                             result.score >= 75 ? "Great job!" : 
+                             result.score >= 60 ? "Good work!" : "Keep practicing!";
+      
+      toast.success(`${accuracyMessage} +${result.xpEarned} XP earned`);
 
     } catch (err) {
       toast.error("Failed to submit quiz. Please try again.");

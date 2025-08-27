@@ -114,6 +114,66 @@
         "explanation": "The photic zone, where photosynthesis occurs, extends to about 200 meters deep."
       }
     ],
-    "xpReward": 100
+"xpReward": 100
+  },
+  {
+    "Id": 4,
+    "title": "Pollution Solutions",
+    "difficulty": "guardian",
+    "category": "pollution-solutions",
+    "questions": [
+      {
+        "question": "Which solution is most effective for reducing ocean plastic?",
+        "options": ["Beach cleanups", "Source reduction", "Ocean barriers", "Recycling programs"],
+        "correct": 1,
+        "explanation": "Preventing plastic from entering the ocean at the source is most effective."
+      },
+      {
+        "question": "What percentage of ocean plastic comes from land-based sources?",
+        "options": ["50%", "65%", "80%", "95%"],
+        "correct": 2,
+        "explanation": "Approximately 80% of ocean plastic pollution originates from land-based sources."
+      },
+      {
+        "question": "Which innovative technology shows promise for ocean cleanup?",
+        "options": ["Magnetic extraction", "Bubble barriers", "Chemical dissolvers", "Heat treatment"],
+        "correct": 1,
+        "explanation": "Bubble barriers can intercept plastic waste in rivers before it reaches oceans."
+      }
+    ],
+    "xpReward": 40,
+    "learningPath": 2,
+    "adaptiveMetadata": {
+      "focusAreas": ["technology", "prevention"],
+      "prerequisites": ["marine-biology-basics"],
+      "nextRecommended": ["climate-solutions"]
+    }
+  },
+  {
+    "Id": 5,
+    "title": "Sustainable Living Impact",
+    "difficulty": "novice",
+    "category": "sustainable-living",
+    "questions": [
+      {
+        "question": "Which daily choice has the biggest impact on ocean health?",
+        "options": ["Using reusable bags", "Eating less seafood", "Reducing water use", "Buying local"],
+        "correct": 1,
+        "explanation": "Reducing seafood consumption helps prevent overfishing and ecosystem damage."
+      },
+      {
+        "question": "How does sustainable palm oil help oceans?",
+        "options": ["Reduces shipping", "Prevents deforestation", "Lowers carbon footprint", "Improves water quality"],
+        "correct": 1,
+        "explanation": "Sustainable palm oil prevents deforestation that leads to soil runoff into oceans."
+      }
+    ],
+    "xpReward": 30,
+    "learningPath": 1,
+    "adaptiveMetadata": {
+      "focusAreas": ["personal-action", "lifestyle"],
+      "difficulty": "beginner-friendly",
+      "realWorldApplication": true
+    }
   }
 ]

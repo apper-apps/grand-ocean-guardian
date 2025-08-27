@@ -1,4 +1,6 @@
 import quizzesData from "@/services/mockData/quizzes.json";
+import React from "react";
+import Error from "@/components/ui/Error";
 
 let quizzes = [...quizzesData];
 
@@ -10,21 +12,21 @@ export const quizService = {
     return quizzes.map(q => ({ ...q, questions: undefined })); // Don't include questions in list
   },
 
-  async getById(id) {
+async getById(id) {
     await delay(150);
     const quiz = quizzes.find(q => q.Id === id);
     if (!quiz) throw new Error("Quiz not found");
     return { ...quiz };
   },
 
-  async getByDifficulty(difficulty) {
+async getByDifficulty(difficulty) {
     await delay(200);
     return quizzes
       .filter(q => q.difficulty === difficulty)
       .map(q => ({ ...q, questions: undefined }));
   },
 
-  async submitQuizResult(userId, quizId, answers) {
+async submitQuizResult(userId, quizId, answers) {
     await delay(300);
     const quiz = quizzes.find(q => q.Id === quizId);
     if (!quiz) throw new Error("Quiz not found");
@@ -53,7 +55,7 @@ export const quizService = {
       totalQuestions: quiz.questions.length,
       xpEarned,
       results,
-      passed: score >= 60
+passed: score >= 60
     };
   },
 
@@ -64,7 +66,7 @@ export const quizService = {
     return { ...quizzes[randomIndex] };
   },
 
-  async getQuizCategories() {
+async getQuizCategories() {
     await delay(100);
     const categories = [...new Set(quizzes.map(q => q.category))];
     return categories.map(category => ({
@@ -76,7 +78,72 @@ export const quizService = {
     }));
   },
 
-  getDifficultyInfo(difficulty) {
+  // Adaptive Learning Methods
+  async getLearningPaths() {
+    await delay(200);
+    return [
+      {
+        Id: 1,
+        title: "Marine Biology Fundamentals",
+        description: "Build your foundation in marine life and ecosystems",
+        difficulty: "novice",
+        icon: "Fish",
+        estimatedTime: 45,
+        totalQuizzes: 8,
+        prerequisites: []
+      },
+      {
+        Id: 2,
+        title: "Conservation Science Track",
+        description: "Learn advanced conservation strategies and methodologies",
+        difficulty: "guardian",
+        icon: "Shield",
+        estimatedTime: 60,
+        totalQuizzes: 12,
+        prerequisites: [1]
+      },
+      {
+        Id: 3,
+        title: "Climate Impact Specialist",
+        description: "Master climate change effects on marine environments",
+        difficulty: "expert",
+        icon: "Thermometer",
+        estimatedTime: 90,
+        totalQuizzes: 15,
+        prerequisites: [1, 2]
+      }
+    ];
+  },
+
+  async getRecommendedQuizzes(userId) {
+    await delay(150);
+    // Simulate AI-powered recommendations based on user performance
+    const recommendedIds = [1, 2]; // Mock recommendation logic
+    return quizzes
+      .filter(q => recommendedIds.includes(q.Id))
+      .map(q => ({ ...q, questions: undefined, learningPath: 1 }));
+  },
+
+  async getAdaptiveContent(userId) {
+    await delay(200);
+    // Simulate adaptive content generation
+    return {
+      insight: "Based on your performance, you excel at marine biology but could strengthen your conservation knowledge.",
+      recommendedQuiz: { ...quizzes[1], questions: undefined },
+      difficultyAdjustment: "maintain",
+      focusAreas: ["conservation", "pollution-solutions"],
+      recommendedCategories: ["conservation"]
+    };
+  },
+
+  async trackQuizPerformance(userId, performanceData) {
+    await delay(100);
+    // Mock storage of performance data for adaptive learning
+    console.log("Performance tracked:", performanceData);
+    return { success: true };
+  },
+
+getDifficultyInfo(difficulty) {
     const info = {
       novice: {
         color: "text-green-600 bg-green-100",
