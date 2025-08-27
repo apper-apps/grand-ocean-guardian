@@ -84,13 +84,13 @@ const getImpactStats = () => {
 
   return (
     <div className="space-y-6">
-      {/* Welcome Header */}
+{/* Welcome Header */}
       <div className="text-center py-4">
         <h1 className="text-2xl font-bold text-gray-900 font-display mb-2">
           Welcome back, {user?.username}! 🌊
         </h1>
         <p className="text-gray-600">
-          Continue your ocean guardian journey
+          Your ocean conservation dashboard
         </p>
       </div>
 
@@ -148,7 +148,7 @@ const getImpactStats = () => {
                 Completed
               </Badge>
             ) : (
-              <Button
+<Button
                 onClick={() => navigate("/streak")}
                 size="sm"
                 icon="Calendar"
@@ -164,7 +164,7 @@ const getImpactStats = () => {
       <Card className="p-6">
         <h3 className="font-semibold text-gray-900 mb-4 font-display">Quick Actions</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Button
+<Button
             onClick={() => navigate("/map")}
             variant="outline"
             className="h-auto p-4 flex flex-col items-center gap-2"
