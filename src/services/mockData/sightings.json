@@ -3,7 +3,11 @@
     "Id": 1,
     "userId": 1,
     "category": "wildlife",
+    "subType": "marine_mammals",
     "description": "Pod of dolphins playing in the waves!",
+    "severity": 1,
+    "endangeredSpecies": false,
+    "behaviorNotes": "Playful jumping and swimming in formation",
     "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400",
     "location": {
       "lat": 33.7490,
@@ -12,13 +16,17 @@
     },
     "timestamp": "2024-12-10T14:30:00Z",
     "verified": true,
-    "xpAwarded": 10
+    "reliabilityScore": 4.5,
+    "verificationCount": 8,
+    "xpAwarded": 15
   },
   {
     "Id": 2,
     "userId": 2,
     "category": "pollution",
+    "subType": "large_debris",
     "description": "Plastic bottles washed up on shore",
+    "severity": 3,
     "imageUrl": "https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=400",
     "location": {
       "lat": 34.0522,
@@ -27,13 +35,18 @@
     },
     "timestamp": "2024-12-10T09:15:00Z",
     "verified": true,
-    "xpAwarded": 15
+    "reliabilityScore": 3.5,
+    "verificationCount": 6,
+    "xpAwarded": 60
   },
   {
     "Id": 3,
     "userId": 3,
     "category": "coral",
+    "subType": "healthy",
     "description": "Healthy coral reef with vibrant colors",
+    "severity": 1,
+    "recoveryProgress": 95,
     "imageUrl": "https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400",
     "location": {
       "lat": 32.7157,
@@ -42,13 +55,17 @@
     },
     "timestamp": "2024-12-09T16:45:00Z",
     "verified": true,
-    "xpAwarded": 20
+    "reliabilityScore": 4.0,
+    "verificationCount": 7,
+    "xpAwarded": 25
   },
   {
     "Id": 4,
     "userId": 1,
-    "category": "hazard",
-    "description": "Ghost net tangled on rocks",
+    "category": "infrastructure",
+    "subType": "cleanup_station",
+    "description": "Marine debris collection point established",
+    "severity": 1,
     "imageUrl": "https://images.unsplash.com/photo-1571116391715-c25ca8ad5065?w=400",
     "location": {
       "lat": 36.9741,
@@ -57,13 +74,19 @@
     },
     "timestamp": "2024-12-09T11:20:00Z",
     "verified": false,
-    "xpAwarded": 25
+    "reliabilityScore": 2.0,
+    "verificationCount": 3,
+    "xpAwarded": 30
   },
   {
     "Id": 5,
     "userId": 4,
     "category": "wildlife",
+    "subType": "endangered",
     "description": "Sea turtle swimming near kelp forest",
+    "severity": 1,
+    "endangeredSpecies": true,
+    "behaviorNotes": "Feeding peacefully among kelp",
     "imageUrl": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400",
     "location": {
       "lat": 34.4140,
@@ -72,13 +95,18 @@
     },
     "timestamp": "2024-12-08T13:10:00Z",
     "verified": true,
+    "reliabilityScore": 4.5,
+    "verificationCount": 9,
     "xpAwarded": 15
   },
   {
     "Id": 6,
     "userId": 2,
     "category": "coral",
+    "subType": "bleaching",
     "description": "Coral bleaching observed in shallow water",
+    "severity": 4,
+    "recoveryProgress": 10,
     "imageUrl": "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=400",
     "location": {
       "lat": 33.7701,
@@ -87,6 +115,46 @@
     },
     "timestamp": "2024-12-08T08:30:00Z",
     "verified": true,
-    "xpAwarded": 20
+    "reliabilityScore": 4.8,
+    "verificationCount": 12,
+    "xpAwarded": 100
+  },
+  {
+    "Id": 7,
+    "userId": 3,
+    "category": "pollution",
+    "subType": "microplastics",
+    "description": "Microplastic particles visible in water sample",
+    "severity": 2,
+    "imageUrl": "https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=400",
+    "location": {
+      "lat": 33.7490,
+      "lng": -118.4065,
+      "address": "Redondo Beach, CA"
+    },
+    "timestamp": "2024-12-07T15:20:00Z",
+    "verified": true,
+    "reliabilityScore": 3.0,
+    "verificationCount": 5,
+    "xpAwarded": 40
+  },
+  {
+    "Id": 8,
+    "userId": 1,
+    "category": "infrastructure",
+    "subType": "mpa",
+    "description": "Marine Protected Area boundary marker",
+    "severity": 1,
+    "imageUrl": "https://images.unsplash.com/photo-1571116391715-c25ca8ad5065?w=400",
+    "location": {
+      "lat": 32.7157,
+      "lng": -117.1611,
+      "address": "La Jolla Marine Reserve, CA"
+    },
+    "timestamp": "2024-12-07T10:45:00Z",
+    "verified": true,
+    "reliabilityScore": 5.0,
+    "verificationCount": 15,
+    "xpAwarded": 30
   }
 ]

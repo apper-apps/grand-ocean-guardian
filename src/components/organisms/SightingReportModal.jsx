@@ -1,28 +1,85 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import Card from "@/components/atoms/Card";
-import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
-import ApperIcon from "@/components/ApperIcon";
-import { cn } from "@/utils/cn";
 import { sightingService } from "@/services/api/sightingService";
 import { userService } from "@/services/api/userService";
+import { cn } from "@/utils/cn";
+import ApperIcon from "@/components/ApperIcon";
+import Card from "@/components/atoms/Card";
+import Button from "@/components/atoms/Button";
+import Progress from "@/components/atoms/Progress";
+import Input from "@/components/atoms/Input";
 
 const SightingReportModal = ({ isOpen, onClose, location }) => {
   const [formData, setFormData] = useState({
-    category: "",
+category: "",
+    subType: "",
     description: "",
+    severity: 1,
+    endangeredSpecies: false,
+    behaviorNotes: "",
+    recoveryProgress: 0,
     image: null
   });
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
 
-  const categories = [
-    { value: "wildlife", label: "Wildlife Encounter", icon: "Fish", color: "text-green-600" },
-    { value: "pollution", label: "Pollution Report", icon: "AlertTriangle", color: "text-red-600" },
-    { value: "coral", label: "Coral Health", icon: "Flower2", color: "text-blue-600" },
-    { value: "hazard", label: "Marine Hazard", icon: "AlertCircle", color: "text-orange-600" }
+const categories = [
+    { 
+      value: "wildlife", 
+      label: "Wildlife Encounter", 
+      icon: "Fish", 
+      color: "text-green-600",
+      subTypes: [
+        { value: "endangered", label: "Endangered Species", suggestions: ["Sea Turtle", "Whale", "Seal"] },
+        { value: "marine_mammals", label: "Marine Mammals", suggestions: ["Dolphin", "Whale", "Sea Lion"] },
+        { value: "fish_schools", label: "Fish Schools", suggestions: ["Sardines", "Anchovies", "Tuna"] },
+        { value: "sea_birds", label: "Sea Birds", suggestions: ["Pelican", "Gull", "Cormorant"] }
+      ]
+    },
+    { 
+      value: "pollution", 
+      label: "Pollution Report", 
+      icon: "AlertTriangle", 
+      color: "text-red-600",
+      subTypes: [
+        { value: "microplastics", label: "Microplastics", suggestions: ["Plastic fragments", "Microbeads", "Fibers"] },
+        { value: "large_debris", label: "Large Debris", suggestions: ["Plastic bags", "Bottles", "Fishing nets"] },
+        { value: "chemical_spills", label: "Chemical Spills", suggestions: ["Oil spill", "Chemical discharge", "Fuel leak"] },
+        { value: "oil_slicks", label: "Oil Slicks", suggestions: ["Surface oil", "Tar balls", "Sheen"] }
+      ]
+    },
+    { 
+      value: "coral", 
+      label: "Coral Health", 
+      icon: "Flower2", 
+      color: "text-blue-600",
+      subTypes: [
+        { value: "bleaching", label: "Coral Bleaching", suggestions: ["White coral", "Stressed coral", "Temperature damage"] },
+        { value: "healthy", label: "Healthy Coral", suggestions: ["Vibrant colors", "Active polyps", "Good coverage"] },
+        { value: "recovering", label: "Recovering Coral", suggestions: ["New growth", "Color returning", "Partial recovery"] },
+        { value: "dead", label: "Dead Coral", suggestions: ["Skeleton only", "Algae covered", "No life"] }
+      ]
+    },
+    { 
+      value: "infrastructure", 
+      label: "Infrastructure", 
+      icon: "Map", 
+      color: "text-purple-600",
+      subTypes: [
+        { value: "mpa", label: "Marine Protected Area", suggestions: ["Boundary marker", "Restricted zone", "No-take area"] },
+        { value: "cleanup_station", label: "Cleanup Station", suggestions: ["Trash bins", "Equipment", "Collection point"] },
+        { value: "monitoring", label: "Monitoring Equipment", suggestions: ["Camera", "Sensor", "Data logger"] },
+        { value: "research", label: "Research Site", suggestions: ["Study area", "Experimental site", "Survey point"] }
+      ]
+    }
   ];
+
+  const selectedCategory = categories.find(cat => cat.value === formData.category);
+  const getLocationSuggestions = () => {
+    if (!selectedCategory || !formData.subType) return [];
+    const subType = selectedCategory.subTypes?.find(sub => sub.value === formData.subType);
+    return subType?.suggestions || [];
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -35,11 +92,16 @@ const SightingReportModal = ({ isOpen, onClose, location }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!formData.category) {
       toast.error("Please select a category");
+      return;
+    }
+
+    if (!formData.subType) {
+      toast.error("Please select a sub-type");
       return;
     }
 
@@ -48,20 +110,27 @@ const SightingReportModal = ({ isOpen, onClose, location }) => {
       return;
     }
 
-    if (formData.description.length > 50) {
-      toast.error("Description must be 50 characters or less");
+    if (formData.description.length > 100) {
+      toast.error("Description must be 100 characters or less");
       return;
     }
 
     setLoading(true);
 
     try {
-      // Create sighting
+      // Enhanced sighting data with new fields
       const sightingData = {
         userId: 1, // Current user
         category: formData.category,
+        subType: formData.subType,
         description: formData.description,
+        severity: formData.severity,
+        endangeredSpecies: formData.endangeredSpecies,
+        behaviorNotes: formData.behaviorNotes,
+        recoveryProgress: formData.category === "coral" ? formData.recoveryProgress : undefined,
         imageUrl: imagePreview || `https://images.unsplash.com/photo-${Date.now()}?w=400`,
+        reliabilityScore: 1.0, // Base score for new reports
+        verificationCount: 1,
         location: location || {
           lat: 33.7490,
           lng: -118.4065,
@@ -108,7 +177,7 @@ const SightingReportModal = ({ isOpen, onClose, location }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Category Selection */}
+{/* Enhanced Category Selection */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
                 Category
@@ -118,7 +187,12 @@ const SightingReportModal = ({ isOpen, onClose, location }) => {
                   <button
                     key={category.value}
                     type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, category: category.value }))}
+                    onClick={() => setFormData(prev => ({ 
+                      ...prev, 
+                      category: category.value,
+                      subType: "",
+                      description: ""
+                    }))}
                     className={cn(
                       "p-3 rounded-xl border-2 text-left transition-all duration-200 hover:scale-105",
                       formData.category === category.value
@@ -140,19 +214,144 @@ const SightingReportModal = ({ isOpen, onClose, location }) => {
               </div>
             </div>
 
-            {/* Description */}
+            {/* Sub-type Selection */}
+            {selectedCategory && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Specific Type
+                </label>
+                <div className="grid grid-cols-1 gap-2">
+                  {selectedCategory.subTypes?.map((subType) => (
+                    <button
+                      key={subType.value}
+                      type="button"
+                      onClick={() => setFormData(prev => ({ 
+                        ...prev, 
+                        subType: subType.value,
+                        description: getLocationSuggestions()[0] || ""
+                      }))}
+                      className={cn(
+                        "p-3 rounded-lg border text-left transition-all duration-200",
+                        formData.subType === subType.value
+                          ? "border-primary-500 bg-primary-50 text-primary-700"
+                          : "border-gray-200 hover:border-gray-300"
+                      )}
+                    >
+                      <div className="text-sm font-medium">{subType.label}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Smart Suggestions */}
+            {getLocationSuggestions().length > 0 && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Common for this area
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {getLocationSuggestions().map((suggestion, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => setFormData(prev => ({ 
+                        ...prev, 
+                        description: suggestion
+                      }))}
+                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Severity Scale (for pollution and coral) */}
+            {(formData.category === "pollution" || formData.category === "coral") && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Severity Level ({formData.severity}/4)
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="4"
+                  value={formData.severity}
+                  onChange={(e) => setFormData(prev => ({ ...prev, severity: parseInt(e.target.value) }))}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>Low</span>
+                  <span>Moderate</span>
+                  <span>High</span>
+                  <span>Critical</span>
+                </div>
+              </div>
+            )}
+
+            {/* Wildlife-specific fields */}
+            {formData.category === "wildlife" && (
+              <div className="space-y-3">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.endangeredSpecies}
+                    onChange={(e) => setFormData(prev => ({ ...prev, endangeredSpecies: e.target.checked }))}
+                    className="rounded"
+                  />
+                  <span className="text-sm text-gray-700">Endangered species</span>
+                </label>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Behavior Notes
+                  </label>
+                  <Input
+                    placeholder="Describe observed behavior..."
+                    value={formData.behaviorNotes}
+                    onChange={(e) => setFormData(prev => ({ 
+                      ...prev, 
+                      behaviorNotes: e.target.value.slice(0, 50) 
+                    }))}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Coral-specific recovery progress */}
+            {formData.category === "coral" && formData.subType === "recovering" && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Recovery Progress ({formData.recoveryProgress}%)
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="5"
+                  value={formData.recoveryProgress}
+                  onChange={(e) => setFormData(prev => ({ ...prev, recoveryProgress: parseInt(e.target.value) }))}
+                  className="w-full"
+className="w-full"
+                />
+              </div>
+            )}
+
+            {/* Enhanced Description */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description ({formData.description.length}/50)
+                Description ({formData.description.length}/100)
               </label>
               <Input
-                placeholder="Brief description of what you observed..."
+                placeholder="Detailed description of what you observed..."
                 value={formData.description}
                 onChange={(e) => setFormData(prev => ({ 
                   ...prev, 
-                  description: e.target.value.slice(0, 50) 
+                  description: e.target.value.slice(0, 100) 
                 }))}
-                className={formData.description.length === 50 ? "border-yellow-500" : ""}
+                className={formData.description.length === 100 ? "border-yellow-500" : ""}
               />
             </div>
 

@@ -11,15 +11,18 @@ import { sightingService } from "@/services/api/sightingService";
 import { cn } from "@/utils/cn";
 
 const InteractiveMap = () => {
-  const [sightings, setSightings] = useState([]);
+const [sightings, setSightings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSighting, setSelectedSighting] = useState(null);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [mapLayer, setMapLayer] = useState("satellite");
   const [filters, setFilters] = useState({
     category: "all",
+    subType: "all",
     dateRange: "all",
-    verified: "all"
+    verified: "all",
+    severity: "all"
   });
   const [currentLocation, setCurrentLocation] = useState({
     lat: 33.7490,
@@ -72,14 +75,58 @@ const InteractiveMap = () => {
     }
   }, []);
 
-  const getCategoryInfo = (category) => {
+const getCategoryInfo = (category, subType) => {
     const info = {
-      wildlife: { icon: "Fish", color: "text-green-600 bg-green-100", label: "Wildlife" },
-      pollution: { icon: "AlertTriangle", color: "text-red-600 bg-red-100", label: "Pollution" },
-      coral: { icon: "Flower2", color: "text-blue-600 bg-blue-100", label: "Coral" },
-      hazard: { icon: "AlertCircle", color: "text-orange-600 bg-orange-100", label: "Hazard" }
+      wildlife: { 
+        icon: "Fish", 
+        color: "text-green-600 bg-green-100", 
+        label: "Wildlife",
+        subTypes: {
+          endangered: { icon: "Shield", label: "Endangered Species" },
+          marine_mammals: { icon: "Waves", label: "Marine Mammals" },
+          fish_schools: { icon: "Fish", label: "Fish Schools" },
+          sea_birds: { icon: "Bird", label: "Sea Birds" }
+        }
+      },
+      pollution: { 
+        icon: "AlertTriangle", 
+        color: "text-red-600 bg-red-100", 
+        label: "Pollution",
+        subTypes: {
+          microplastics: { icon: "Zap", label: "Microplastics" },
+          large_debris: { icon: "Trash2", label: "Large Debris" },
+          chemical_spills: { icon: "Droplets", label: "Chemical Spills" },
+          oil_slicks: { icon: "Circle", label: "Oil Slicks" }
+        }
+      },
+      coral: { 
+        icon: "Flower2", 
+        color: "text-blue-600 bg-blue-100", 
+        label: "Coral Health",
+        subTypes: {
+          bleaching: { icon: "Sun", label: "Coral Bleaching" },
+          healthy: { icon: "Heart", label: "Healthy Coral" },
+          recovering: { icon: "TrendingUp", label: "Recovering Coral" },
+          dead: { icon: "X", label: "Dead Coral" }
+        }
+      },
+      infrastructure: { 
+        icon: "Map", 
+        color: "text-purple-600 bg-purple-100", 
+        label: "Infrastructure",
+        subTypes: {
+          mpa: { icon: "Shield", label: "Marine Protected Area" },
+          cleanup_station: { icon: "Recycle", label: "Cleanup Station" },
+          monitoring: { icon: "Camera", label: "Monitoring Equipment" },
+          research: { icon: "Microscope", label: "Research Site" }
+        }
+      }
     };
-    return info[category] || info.wildlife;
+    const categoryData = info[category] || info.wildlife;
+    if (subType && categoryData.subTypes[subType]) {
+      return { ...categoryData, ...categoryData.subTypes[subType] };
+    }
+    return categoryData;
   };
 
   const filterOptions = [
@@ -87,8 +134,23 @@ const InteractiveMap = () => {
     { value: "wildlife", label: "Wildlife" },
     { value: "pollution", label: "Pollution" },
     { value: "coral", label: "Coral Health" },
-    { value: "hazard", label: "Hazards" }
+    { value: "infrastructure", label: "Infrastructure" }
   ];
+
+  const mapLayers = [
+    { value: "satellite", label: "Satellite", icon: "Satellite" },
+    { value: "terrain", label: "Terrain", icon: "Mountain" },
+    { value: "traffic", label: "Traffic", icon: "Ship" }
+  ];
+
+  const getMapLayerStyle = (layer) => {
+    const styles = {
+      satellite: "bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600",
+      terrain: "bg-gradient-to-br from-green-400 via-green-500 to-green-700",
+      traffic: "bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600"
+    };
+    return styles[layer] || styles.satellite;
+  };
 
   const dateRangeOptions = [
     { value: "all", label: "All Time" },
@@ -117,17 +179,52 @@ const InteractiveMap = () => {
         </Button>
       </div>
 
-      {/* Filters */}
-      <Card className="p-4">
+{/* Enhanced Filters */}
+      <Card className="p-4 space-y-4">
+        {/* Map Layer Controls */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Map View</label>
+          <div className="flex gap-2">
+            {mapLayers.map(layer => (
+              <button
+                key={layer.value}
+                onClick={() => setMapLayer(layer.value)}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
+                  mapLayer === layer.value 
+                    ? "bg-primary-500 text-white shadow-md" 
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                )}
+              >
+                <ApperIcon name={layer.icon} size={16} />
+                {layer.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Content Filters */}
         <div className="flex flex-wrap gap-3">
           <select
             value={filters.category}
-            onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
+            onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value, subType: "all" }))}
             className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
           >
             {filterOptions.map(option => (
               <option key={option.value} value={option.value}>{option.label}</option>
             ))}
+          </select>
+
+          <select
+            value={filters.severity}
+            onChange={(e) => setFilters(prev => ({ ...prev, severity: e.target.value }))}
+            className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+          >
+            <option value="all">All Severity</option>
+            <option value="1">Severity 1 (Low)</option>
+            <option value="2">Severity 2 (Moderate)</option>
+            <option value="3">Severity 3 (High)</option>
+            <option value="4">Severity 4 (Critical)</option>
           </select>
 
           <select
@@ -148,15 +245,31 @@ const InteractiveMap = () => {
         </div>
       </Card>
 
-      {/* Map Placeholder with Sightings */}
+{/* Enhanced Multi-Layer Map */}
       <Card className="p-0 overflow-hidden">
-        {/* Map View */}
-        <div className="relative h-96 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600">
-          {/* Ocean Background Effect */}
+        {/* Map View with Layer Support */}
+        <div className={cn("relative h-96", getMapLayerStyle(mapLayer))}>
+          {/* Layer-specific Background Effects */}
           <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-10 left-10 w-8 h-8 bg-white rounded-full animate-pulse"></div>
-            <div className="absolute top-20 right-16 w-6 h-6 bg-white rounded-full animate-pulse animation-delay-1000"></div>
-            <div className="absolute bottom-16 left-20 w-10 h-10 bg-white rounded-full animate-pulse animation-delay-2000"></div>
+            {mapLayer === "satellite" && (
+              <>
+                <div className="absolute top-10 left-10 w-8 h-8 bg-white rounded-full animate-pulse"></div>
+                <div className="absolute top-20 right-16 w-6 h-6 bg-white rounded-full animate-pulse animation-delay-1000"></div>
+                <div className="absolute bottom-16 left-20 w-10 h-10 bg-white rounded-full animate-pulse animation-delay-2000"></div>
+              </>
+            )}
+            {mapLayer === "terrain" && (
+              <>
+                <div className="absolute top-12 left-16 w-12 h-4 bg-yellow-300 rounded opacity-60"></div>
+                <div className="absolute bottom-20 right-12 w-8 h-8 bg-brown-400 rounded-full opacity-70"></div>
+              </>
+            )}
+            {mapLayer === "traffic" && (
+              <>
+                <div className="absolute top-16 left-20 w-16 h-2 bg-red-300 rounded opacity-80"></div>
+                <div className="absolute bottom-24 right-16 w-12 h-2 bg-orange-300 rounded opacity-70"></div>
+              </>
+            )}
           </div>
 
           {/* Current Location Indicator */}
@@ -170,9 +283,9 @@ const InteractiveMap = () => {
             </div>
           </div>
 
-          {/* Sighting Markers */}
+          {/* Enhanced Sighting Markers with Reliability */}
           {sightings.slice(0, 8).map((sighting, index) => {
-            const categoryInfo = getCategoryInfo(sighting.category);
+            const categoryInfo = getCategoryInfo(sighting.category, sighting.subType);
             const positions = [
               { top: "20%", left: "15%" },
               { top: "30%", left: "75%" },
@@ -185,6 +298,8 @@ const InteractiveMap = () => {
             ];
 
             const position = positions[index] || positions[0];
+            const reliabilityScore = sighting.reliabilityScore || 1;
+            const verificationCount = sighting.verificationCount || 1;
 
             return (
               <button
@@ -194,24 +309,39 @@ const InteractiveMap = () => {
                 style={{ top: position.top, left: position.left }}
               >
                 <div className={cn(
-                  "w-8 h-8 rounded-full shadow-lg flex items-center justify-center text-white",
+                  "w-10 h-10 rounded-full shadow-lg flex items-center justify-center text-white relative",
                   sighting.category === "wildlife" && "bg-green-500",
                   sighting.category === "pollution" && "bg-red-500",
                   sighting.category === "coral" && "bg-blue-500",
-                  sighting.category === "hazard" && "bg-orange-500"
+                  sighting.category === "infrastructure" && "bg-purple-500",
+                  reliabilityScore >= 4 && "ring-2 ring-yellow-400"
                 )}>
-                  <ApperIcon name={categoryInfo.icon} size={16} />
-                </div>
-                {sighting.verified && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full border border-white">
-                    <ApperIcon name="Check" size={8} className="text-white ml-0.5 mt-0.5" />
+                  <ApperIcon name={categoryInfo.icon} size={18} />
+                  
+                  {/* Severity Indicator */}
+                  {sighting.severity && sighting.severity > 1 && (
+                    <div className="absolute -top-1 -left-1 w-4 h-4 bg-red-600 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-white">{sighting.severity}</span>
+                    </div>
+                  )}
+                  
+                  {/* Verification Status */}
+                  {sighting.verified && (
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full border border-white flex items-center justify-center">
+                      <ApperIcon name="Check" size={10} className="text-white" />
+                    </div>
+                  )}
+                  
+                  {/* Reliability Score */}
+                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/70 text-white text-xs px-1 rounded">
+                    {reliabilityScore.toFixed(1)}★
                   </div>
-                )}
+                </div>
               </button>
             );
           })}
 
-          {/* Map Controls */}
+          {/* Enhanced Map Controls */}
           <div className="absolute top-4 right-4 z-30 flex flex-col gap-2">
             <Button
               size="sm"
@@ -237,26 +367,41 @@ const InteractiveMap = () => {
             >
               <ApperIcon name="Crosshair" size={16} />
             </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm"
+              onClick={() => toast.info("Refreshing data...")}
+            >
+              <ApperIcon name="RefreshCw" size={16} />
+            </Button>
           </div>
         </div>
 
         {/* Selected Sighting Details */}
-        {selectedSighting && (
+{selectedSighting && (
           <div className="p-4 border-t bg-gradient-to-r from-gray-50 to-blue-50">
             <div className="flex items-start gap-4">
               {selectedSighting.imageUrl && (
                 <img 
                   src={selectedSighting.imageUrl} 
                   alt="Sighting"
-                  className="w-16 h-16 rounded-xl object-cover flex-shrink-0"
+                  className="w-20 h-20 rounded-xl object-cover flex-shrink-0"
                 />
               )}
               <div className="flex-1">
-                <div className="flex items-start justify-between mb-2">
-                  <Badge className={getCategoryInfo(selectedSighting.category).color}>
-                    <ApperIcon name={getCategoryInfo(selectedSighting.category).icon} size={14} className="mr-1" />
-                    {getCategoryInfo(selectedSighting.category).label}
-                  </Badge>
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex gap-2">
+                    <Badge className={getCategoryInfo(selectedSighting.category, selectedSighting.subType).color}>
+                      <ApperIcon name={getCategoryInfo(selectedSighting.category, selectedSighting.subType).icon} size={14} className="mr-1" />
+                      {getCategoryInfo(selectedSighting.category, selectedSighting.subType).label}
+                    </Badge>
+                    {selectedSighting.severity && (
+                      <Badge variant="danger" size="sm">
+                        Severity {selectedSighting.severity}
+                      </Badge>
+                    )}
+                  </div>
                   <button
                     onClick={() => setSelectedSighting(null)}
                     className="text-gray-400 hover:text-gray-600"
@@ -264,8 +409,50 @@ const InteractiveMap = () => {
                     <ApperIcon name="X" size={16} />
                   </button>
                 </div>
-                <p className="font-medium text-gray-900 mb-1">{selectedSighting.description}</p>
-                <p className="text-sm text-gray-600">{selectedSighting.location.address}</p>
+                
+                <p className="font-medium text-gray-900 mb-2">{selectedSighting.description}</p>
+                
+                {/* Enhanced Details */}
+                <div className="space-y-1 text-sm text-gray-600">
+                  <p>{selectedSighting.location.address}</p>
+                  
+                  {selectedSighting.endangeredSpecies && (
+                    <p className="flex items-center gap-1 text-red-600">
+                      <ApperIcon name="Shield" size={14} />
+                      Endangered Species
+                    </p>
+                  )}
+                  
+                  {selectedSighting.behaviorNotes && (
+                    <p><span className="font-medium">Behavior:</span> {selectedSighting.behaviorNotes}</p>
+                  )}
+                  
+                  {selectedSighting.recoveryProgress !== undefined && (
+                    <p><span className="font-medium">Recovery Progress:</span> {selectedSighting.recoveryProgress}%</p>
+                  )}
+                  
+                  <div className="flex items-center justify-between pt-2 border-t border-gray-200">
+                    <div className="flex items-center gap-3">
+                      <span className="flex items-center gap-1">
+                        <ApperIcon name="Star" size={14} className="text-yellow-500" />
+                        <span className="font-medium">{(selectedSighting.reliabilityScore || 1).toFixed(1)}</span>
+                      </span>
+                      <span className="flex items-center gap-1 text-gray-500">
+                        <ApperIcon name="Users" size={14} />
+                        <span>{selectedSighting.verificationCount || 1} reports</span>
+                      </span>
+                    </div>
+                    
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => toast.success("Verification submitted!")}
+                    >
+                      <ApperIcon name="CheckCircle" size={14} />
+                      Verify
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

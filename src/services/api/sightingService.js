@@ -5,15 +5,23 @@ let sightings = [...sightingsData];
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const sightingService = {
-  async getAll(filters = {}) {
+async getAll(filters = {}) {
     await delay(300);
     let filtered = [...sightings];
 
-    if (filters.category) {
+    if (filters.category && filters.category !== "all") {
       filtered = filtered.filter(s => s.category === filters.category);
     }
 
-    if (filters.dateRange) {
+    if (filters.subType && filters.subType !== "all") {
+      filtered = filtered.filter(s => s.subType === filters.subType);
+    }
+
+    if (filters.severity && filters.severity !== "all") {
+      filtered = filtered.filter(s => s.severity === parseInt(filters.severity));
+    }
+
+    if (filters.dateRange && filters.dateRange !== "all") {
       const now = new Date();
       let cutoffDate;
       
@@ -38,6 +46,11 @@ export const sightingService = {
       filtered = filtered.filter(s => s.userId === filters.userId);
     }
 
+    if (filters.verified && filters.verified !== "all") {
+      const isVerified = filters.verified === "true";
+      filtered = filtered.filter(s => s.verified === isVerified);
+    }
+
     return filtered
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
       .map(s => ({ ...s }));
@@ -50,7 +63,7 @@ export const sightingService = {
     return { ...sighting };
   },
 
-  async create(sightingData) {
+async create(sightingData) {
     await delay(400);
     const newId = Math.max(...sightings.map(s => s.Id), 0) + 1;
     
@@ -59,7 +72,9 @@ export const sightingService = {
       ...sightingData,
       timestamp: new Date().toISOString(),
       verified: false,
-      xpAwarded: this.calculateXP(sightingData.category)
+      reliabilityScore: sightingData.reliabilityScore || 1.0,
+      verificationCount: sightingData.verificationCount || 1,
+      xpAwarded: this.calculateXP(sightingData.category, sightingData.severity)
     };
 
     sightings.push(newSighting);
@@ -84,14 +99,39 @@ export const sightingService = {
     return { ...deleted };
   },
 
-  calculateXP(category) {
-    const xpMap = {
+calculateXP(category, severity = 1) {
+    const baseXPMap = {
       wildlife: 15,
       pollution: 20,
       coral: 25,
-      hazard: 30
+      infrastructure: 30
     };
-    return xpMap[category] || 10;
+    
+    const baseXP = baseXPMap[category] || 10;
+    const severityMultiplier = severity || 1;
+    
+    return Math.floor(baseXP * severityMultiplier);
+  },
+
+  async updateVerification(id, userId) {
+    await delay(200);
+    const sightingIndex = sightings.findIndex(s => s.Id === id);
+    if (sightingIndex === -1) throw new Error("Sighting not found");
+    
+    const sighting = sightings[sightingIndex];
+    
+    // Increase verification count and update reliability score
+    const newVerificationCount = (sighting.verificationCount || 1) + 1;
+    const newReliabilityScore = Math.min(5.0, 1.0 + (newVerificationCount - 1) * 0.5);
+    
+    sightings[sightingIndex] = {
+      ...sighting,
+      verificationCount: newVerificationCount,
+      reliabilityScore: newReliabilityScore,
+      verified: newReliabilityScore >= 3.0
+    };
+    
+    return { ...sightings[sightingIndex] };
   },
 
   async getRecentSightings(limit = 10) {
