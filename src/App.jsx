@@ -1,4 +1,4 @@
-import { Navigate, Route, Router, Routes } from "react-router-dom";
+import { Navigate, Route, BrowserRouter, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -22,7 +22,7 @@ function App() {
   }
 
 return (
-    <Router>
+<BrowserRouter>
       <Layout>
         <Routes>
           {/* Public Routes */}
@@ -98,7 +98,7 @@ return (
           className="z-50"
         />
       </Layout>
-    </Router>
+</BrowserRouter>
   );
 }
 
