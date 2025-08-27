@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import ShareButton from "@/components/atoms/ShareButton";
-import { userService } from "@/services/api/userService";
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from "react-toastify";
+import ShareButton from '@/components/atoms/ShareButton'
+import { userService } from '@/services/api/userService'
 import { sightingService } from "@/services/api/sightingService";
 import { streakService } from "@/services/api/streakService";
 import { impactService } from "@/services/api/impactService";
