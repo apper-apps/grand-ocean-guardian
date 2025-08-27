@@ -1,51 +1,84 @@
 [
-  {
+{
     "Id": 1,
     "userId": 1,
     "date": "2024-12-10",
     "completed": true,
-    "activities": ["avoided-plastic-bag", "used-reusable-bottle"]
-  },
+    "category": "plasticFree",
+    "activities": ["avoided-plastic-bag", "used-reusable-bottle"],
+    "extraActivities": ["organized-beach-cleanup"],
+    "lifelineUsed": false,
+    "bonusXP": 10
+},
   {
     "Id": 2,
     "userId": 1,
     "date": "2024-12-09",
     "completed": true,
-    "activities": ["brought-reusable-cup", "refused-plastic-straw"]
+    "category": "conservation",
+    "activities": ["water-conservation", "energy-saving"],
+    "extraActivities": [],
+    "lifelineUsed": false,
+    "bonusXP": 5
   },
   {
     "Id": 3,
     "userId": 1,
     "date": "2024-12-08",
     "completed": true,
-    "activities": ["used-metal-utensils", "bought-bulk-items"]
+    "category": "learning",
+    "activities": ["completed-ocean-quiz", "read-conservation-article"],
+    "extraActivities": ["watched-documentary"],
+    "lifelineUsed": false,
+    "bonusXP": 15
   },
   {
     "Id": 4,
     "userId": 2,
     "date": "2024-12-10",
     "completed": true,
-    "activities": ["zero-waste-lunch", "composted-organics"]
+    "category": "plasticFree",
+    "activities": ["zero-waste-lunch", "composted-organics"],
+    "extraActivities": ["taught-neighbor-composting", "organized-community-garden"],
+    "lifelineUsed": false,
+    "bonusXP": 20
   },
   {
     "Id": 5,
     "userId": 2,
     "date": "2024-12-09",
     "completed": true,
-    "activities": ["glass-containers", "avoided-packaged-foods"]
+    "category": "community",
+    "activities": ["mentored-new-user", "shared-conservation-tip"],
+    "extraActivities": ["led-virtual-cleanup"],
+    "lifelineUsed": false,
+    "bonusXP": 25
   },
   {
     "Id": 6,
     "userId": 3,
     "date": "2024-12-10",
     "completed": false,
-    "activities": []
+    "category": "plasticFree",
+    "activities": [],
+    "extraActivities": [],
+    "lifelineUsed": true,
+    "bonusXP": 0,
+    "recoveryContent": {
+      "articlesProvided": ["plastic-reduction-basics", "ocean-impact-guide"],
+      "videosRecommended": ["daily-habits-change"],
+      "quizSuggested": "plastic-awareness-quiz"
+    }
   },
   {
     "Id": 7,
     "userId": 3,
     "date": "2024-12-09",
     "completed": true,
-    "activities": ["reusable-shopping-bag", "bamboo-toothbrush"]
+    "category": "plasticFree",
+    "activities": ["reusable-shopping-bag", "bamboo-toothbrush"],
+    "extraActivities": [],
+    "lifelineUsed": false,
+    "bonusXP": 5
   }
 ]

@@ -1,5 +1,5 @@
 [
-  {
+{
     "Id": 1,
     "username": "OceanExplorer42",
     "email": "explorer@ocean.com",
@@ -8,10 +8,51 @@
     "bestStreak": 45,
     "achievements": [1, 2, 3, 5, 7, 9],
     "joinedDate": "2024-01-15T00:00:00Z",
-    "profileImage": null
+    "profileImage": null,
+    "streaks": {
+      "plasticFree": {
+        "current": 23,
+        "best": 45,
+        "lastActivity": "2024-12-10"
+      },
+      "conservation": {
+        "current": 15,
+        "best": 28,
+        "lastActivity": "2024-12-09"
+      },
+      "learning": {
+        "current": 8,
+        "best": 12,
+        "lastActivity": "2024-12-08"
+      },
+      "community": {
+        "current": 5,
+        "best": 18,
+        "lastActivity": "2024-12-07"
+      }
+    },
+    "lifelineTokens": 3,
+    "totalLifelinesEarned": 8,
+    "notificationPreferences": {
+      "enabled": true,
+      "preferredTimes": ["09:00", "18:00"],
+      "timezone": "UTC-5",
+      "reminderTypes": ["streak", "recovery", "milestone"],
+      "smartTiming": true
+    },
+    "recoveryState": {
+      "inRecovery": false,
+      "brokenStreakCategory": null,
+      "recoveryStartDate": null,
+      "educationalProgress": {
+        "articlesRead": 12,
+        "videosWatched": 8,
+        "quizzesCompleted": 15
+      }
+    }
   },
   {
-    "Id": 2,
+"Id": 2,
     "username": "WaveWatcher",
     "email": "watcher@waves.com",
     "totalXP": 3200,
@@ -19,10 +60,51 @@
     "bestStreak": 89,
     "achievements": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     "joinedDate": "2023-12-01T00:00:00Z",
-    "profileImage": null
+    "profileImage": null,
+    "streaks": {
+      "plasticFree": {
+        "current": 67,
+        "best": 89,
+        "lastActivity": "2024-12-10"
+      },
+      "conservation": {
+        "current": 34,
+        "best": 45,
+        "lastActivity": "2024-12-10"
+      },
+      "learning": {
+        "current": 22,
+        "best": 30,
+        "lastActivity": "2024-12-10"
+      },
+      "community": {
+        "current": 18,
+        "best": 25,
+        "lastActivity": "2024-12-09"
+      }
+    },
+    "lifelineTokens": 5,
+    "totalLifelinesEarned": 12,
+    "notificationPreferences": {
+      "enabled": true,
+      "preferredTimes": ["08:30", "20:00"],
+      "timezone": "UTC-8",
+      "reminderTypes": ["streak", "milestone"],
+      "smartTiming": true
+    },
+    "recoveryState": {
+      "inRecovery": false,
+      "brokenStreakCategory": null,
+      "recoveryStartDate": null,
+      "educationalProgress": {
+        "articlesRead": 28,
+        "videosWatched": 15,
+        "quizzesCompleted": 22
+      }
+    }
   },
   {
-    "Id": 3,
+"Id": 3,
     "username": "CoralGuardian",
     "email": "coral@guardian.com",
     "totalXP": 1950,
@@ -30,10 +112,51 @@
     "bestStreak": 34,
     "achievements": [1, 2, 5, 6, 8],
     "joinedDate": "2024-02-10T00:00:00Z",
-    "profileImage": null
+    "profileImage": null,
+    "streaks": {
+      "plasticFree": {
+        "current": 12,
+        "best": 34,
+        "lastActivity": "2024-12-09"
+      },
+      "conservation": {
+        "current": 0,
+        "best": 8,
+        "lastActivity": "2024-12-05"
+      },
+      "learning": {
+        "current": 3,
+        "best": 7,
+        "lastActivity": "2024-12-08"
+      },
+      "community": {
+        "current": 1,
+        "best": 4,
+        "lastActivity": "2024-12-09"
+      }
+    },
+    "lifelineTokens": 1,
+    "totalLifelinesEarned": 3,
+    "notificationPreferences": {
+      "enabled": true,
+      "preferredTimes": ["07:00", "19:30"],
+      "timezone": "UTC-5",
+      "reminderTypes": ["streak", "recovery"],
+      "smartTiming": false
+    },
+    "recoveryState": {
+      "inRecovery": true,
+      "brokenStreakCategory": "conservation",
+      "recoveryStartDate": "2024-12-06",
+      "educationalProgress": {
+        "articlesRead": 5,
+        "videosWatched": 3,
+        "quizzesCompleted": 8
+      }
+    }
   },
   {
-    "Id": 4,
+"Id": 4,
     "username": "DeepSeaDiver",
     "email": "deep@sea.com",
     "totalXP": 4100,
@@ -41,10 +164,51 @@
     "bestStreak": 78,
     "achievements": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "joinedDate": "2023-11-20T00:00:00Z",
-    "profileImage": null
+    "profileImage": null,
+    "streaks": {
+      "plasticFree": {
+        "current": 45,
+        "best": 78,
+        "lastActivity": "2024-12-10"
+      },
+      "conservation": {
+        "current": 42,
+        "best": 65,
+        "lastActivity": "2024-12-10"
+      },
+      "learning": {
+        "current": 38,
+        "best": 52,
+        "lastActivity": "2024-12-10"
+      },
+      "community": {
+        "current": 28,
+        "best": 41,
+        "lastActivity": "2024-12-10"
+      }
+    },
+    "lifelineTokens": 7,
+    "totalLifelinesEarned": 18,
+    "notificationPreferences": {
+      "enabled": true,
+      "preferredTimes": ["06:30", "17:30"],
+      "timezone": "UTC-8",
+      "reminderTypes": ["streak", "milestone", "community"],
+      "smartTiming": true
+    },
+    "recoveryState": {
+      "inRecovery": false,
+      "brokenStreakCategory": null,
+      "recoveryStartDate": null,
+      "educationalProgress": {
+        "articlesRead": 45,
+        "videosWatched": 32,
+        "quizzesCompleted": 38
+      }
+    }
   },
   {
-    "Id": 5,
+"Id": 5,
     "username": "TurtleFriend",
     "email": "turtle@friend.com",
     "totalXP": 1420,
@@ -52,6 +216,47 @@
     "bestStreak": 28,
     "achievements": [1, 3, 5, 7],
     "joinedDate": "2024-03-01T00:00:00Z",
-    "profileImage": null
+    "profileImage": null,
+    "streaks": {
+      "plasticFree": {
+        "current": 8,
+        "best": 28,
+        "lastActivity": "2024-12-10"
+      },
+      "conservation": {
+        "current": 5,
+        "best": 12,
+        "lastActivity": "2024-12-09"
+      },
+      "learning": {
+        "current": 12,
+        "best": 15,
+        "lastActivity": "2024-12-10"
+      },
+      "community": {
+        "current": 0,
+        "best": 3,
+        "lastActivity": "2024-11-28"
+      }
+    },
+    "lifelineTokens": 2,
+    "totalLifelinesEarned": 4,
+    "notificationPreferences": {
+      "enabled": true,
+      "preferredTimes": ["10:00", "21:00"],
+      "timezone": "UTC-5",
+      "reminderTypes": ["streak", "recovery", "learning"],
+      "smartTiming": false
+    },
+    "recoveryState": {
+      "inRecovery": true,
+      "brokenStreakCategory": "community",
+      "recoveryStartDate": "2024-11-29",
+      "educationalProgress": {
+        "articlesRead": 8,
+        "videosWatched": 12,
+        "quizzesCompleted": 18
+      }
+    }
   }
 ]
