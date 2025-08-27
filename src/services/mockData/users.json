@@ -1,13 +1,14 @@
 [
-{
+  {
     "Id": 1,
-    "username": "OceanExplorer42",
-    "email": "explorer@ocean.com",
-    "totalXP": 2850,
-    "currentStreak": 23,
-    "bestStreak": 45,
-    "achievements": [1, 2, 3, 5, 7, 9],
-    "joinedDate": "2024-01-15T00:00:00Z",
+    "username": "AdminUser",
+    "email": "admin@ocean.com",
+    "role": "admin",
+    "totalXP": 5000,
+    "currentStreak": 50,
+    "bestStreak": 100,
+    "achievements": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "joinedDate": "2023-01-01T00:00:00Z",
     "profileImage": null,
     "streaks": {
       "plasticFree": {
@@ -51,15 +52,16 @@
       }
     }
   },
-  {
-"Id": 2,
-    "username": "WaveWatcher",
-    "email": "watcher@waves.com",
-    "totalXP": 3200,
-    "currentStreak": 67,
-    "bestStreak": 89,
-    "achievements": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    "joinedDate": "2023-12-01T00:00:00Z",
+{
+    "Id": 2,
+    "username": "OceanExplorer42",
+    "email": "explorer@ocean.com",
+    "role": "user",
+    "totalXP": 2850,
+    "currentStreak": 23,
+    "bestStreak": 45,
+    "achievements": [1, 2, 3, 5, 7, 9],
+    "joinedDate": "2024-01-15T00:00:00Z",
     "profileImage": null,
     "streaks": {
       "plasticFree": {

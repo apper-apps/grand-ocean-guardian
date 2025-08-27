@@ -6,9 +6,9 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export const userService = {
 async getCurrentUser() {
     await delay(300);
-    // Simulate logged in user (first user in mock data)
-    const currentUser = users.find(user => user.Id === 1);
-    return { ...currentUser };
+    // Get current authenticated user from auth service
+    const { authService } = await import('./authService.js');
+    return await authService.getCurrentUser();
   },
 
   async getLeaderboard(limit = 20) {

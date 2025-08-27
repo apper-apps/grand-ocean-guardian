@@ -6,16 +6,16 @@ const BottomNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navItems = [
-    { id: "home", label: "Home", icon: "Home", path: "/" },
+const navItems = [
+    { id: "home", label: "Home", icon: "Home", path: "/dashboard" },
     { id: "map", label: "Map", icon: "Map", path: "/map" },
     { id: "streak", label: "Streak", icon: "Calendar", path: "/streak" },
     { id: "learn", label: "Learn", icon: "BookOpen", path: "/learn" },
     { id: "profile", label: "Profile", icon: "User", path: "/profile" }
   ];
 
-  const isActive = (path) => {
-    if (path === "/") return location.pathname === "/";
+const isActive = (path) => {
+    if (path === "/dashboard") return location.pathname === "/" || location.pathname === "/dashboard";
     return location.pathname.startsWith(path);
   };
 
