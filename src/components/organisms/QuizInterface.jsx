@@ -10,22 +10,27 @@ import ApperIcon from "@/components/ApperIcon";
 import { cn } from "@/utils/cn";
 import { quizService } from "@/services/api/quizService";
 import { userService } from "@/services/api/userService";
-// Track performance for adaptive learning
+function QuizInterface({ quizId, onComplete }) {
+  // All state hooks must be inside the component function
+  const [quiz, setQuiz] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  // Track performance for adaptive learning
   const [performanceData, setPerformanceData] = useState({
     startTime: Date.now(),
     answerTimes: [],
     difficultyAdjustment: null
   });
-const QuizInterface = ({ quizId, onComplete }) => {
-  const [quiz, setQuiz] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
+  // Add animation and engagement tracking
+  const [showHint, setShowHint] = useState(false);
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-
   const loadQuiz = async () => {
     try {
       setLoading(true);
