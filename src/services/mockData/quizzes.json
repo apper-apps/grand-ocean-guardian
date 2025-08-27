@@ -1,0 +1,119 @@
+[
+  {
+    "Id": 1,
+    "title": "Ocean Basics",
+    "difficulty": "novice",
+    "category": "marine-biology",
+    "questions": [
+      {
+        "question": "What percentage of Earth's surface is covered by oceans?",
+        "options": ["50%", "65%", "71%", "80%"],
+        "correct": 2,
+        "explanation": "Oceans cover approximately 71% of Earth's surface."
+      },
+      {
+        "question": "Which ocean is the largest?",
+        "options": ["Atlantic", "Pacific", "Indian", "Arctic"],
+        "correct": 1,
+        "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth."
+      },
+      {
+        "question": "What is the main cause of ocean acidification?",
+        "options": ["Plastic pollution", "Oil spills", "CO2 absorption", "Overfishing"],
+        "correct": 2,
+        "explanation": "Ocean acidification occurs when the ocean absorbs CO2 from the atmosphere."
+      },
+      {
+        "question": "How long does it take for a plastic bottle to decompose in the ocean?",
+        "options": ["50 years", "100 years", "450 years", "1000 years"],
+        "correct": 2,
+        "explanation": "Plastic bottles can take up to 450 years to decompose in marine environments."
+      },
+      {
+        "question": "What is a ghost net?",
+        "options": ["Abandoned fishing net", "Transparent jellyfish", "Type of coral", "Ocean current"],
+        "correct": 0,
+        "explanation": "Ghost nets are abandoned or lost fishing nets that continue to trap marine life."
+      }
+    ],
+    "xpReward": 25
+  },
+  {
+    "Id": 2,
+    "title": "Marine Conservation",
+    "difficulty": "guardian",
+    "category": "conservation",
+    "questions": [
+      {
+        "question": "What is the primary cause of coral bleaching?",
+        "options": ["Cold water", "Ocean warming", "Low salinity", "Darkness"],
+        "correct": 1,
+        "explanation": "Rising ocean temperatures stress corals, causing them to expel algae and bleach."
+      },
+      {
+        "question": "How much plastic enters the ocean annually?",
+        "options": ["1 million tons", "8 million tons", "15 million tons", "25 million tons"],
+        "correct": 1,
+        "explanation": "Approximately 8 million tons of plastic waste enter oceans each year."
+      },
+      {
+        "question": "What percentage of marine species are affected by plastic pollution?",
+        "options": ["25%", "44%", "60%", "86%"],
+        "correct": 3,
+        "explanation": "Studies show that 86% of marine turtle species are affected by plastic pollution."
+      },
+      {
+        "question": "Which marine ecosystem produces the most oxygen?",
+        "options": ["Coral reefs", "Kelp forests", "Phytoplankton", "Seagrass beds"],
+        "correct": 2,
+        "explanation": "Phytoplankton produce about 70% of Earth's oxygen through photosynthesis."
+      },
+      {
+        "question": "What is bycatch?",
+        "options": ["Fish breeding method", "Unwanted catch in fishing", "Type of fishing net", "Marine protected area"],
+        "correct": 1,
+        "explanation": "Bycatch refers to unwanted marine life caught accidentally during commercial fishing."
+      }
+    ],
+    "xpReward": 50
+  },
+  {
+    "Id": 3,
+    "title": "Marine Science Expert",
+    "difficulty": "expert",
+    "category": "marine-science",
+    "questions": [
+      {
+        "question": "What is the thermohaline circulation?",
+        "options": ["Ocean warming process", "Global ocean current system", "Fish migration pattern", "Tidal mechanism"],
+        "correct": 1,
+        "explanation": "Thermohaline circulation is the global ocean conveyor belt driven by temperature and salinity differences."
+      },
+      {
+        "question": "Which pH level indicates severe ocean acidification?",
+        "options": ["8.2", "7.8", "7.4", "7.0"],
+        "correct": 2,
+        "explanation": "Ocean pH has dropped from 8.2 to 8.1, with 7.4 indicating severe acidification."
+      },
+      {
+        "question": "What percentage of marine species live in coral reefs?",
+        "options": ["10%", "25%", "40%", "55%"],
+        "correct": 1,
+        "explanation": "Despite covering <1% of ocean floor, coral reefs support 25% of marine species."
+      },
+      {
+        "question": "What is the primary component of marine microplastics?",
+        "options": ["Polyethylene", "Polystyrene", "PET bottles", "Synthetic textiles"],
+        "correct": 3,
+        "explanation": "Synthetic textile fibers are the most common type of microplastic in oceans."
+      },
+      {
+        "question": "How deep is the ocean's photic zone?",
+        "options": ["50 meters", "200 meters", "500 meters", "1000 meters"],
+        "correct": 1,
+        "explanation": "The photic zone, where photosynthesis occurs, extends to about 200 meters deep."
+      }
+    ],
+    "xpReward": 100
+  }
+]

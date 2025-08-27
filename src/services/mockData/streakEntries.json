@@ -1,0 +1,51 @@
+[
+  {
+    "Id": 1,
+    "userId": 1,
+    "date": "2024-12-10",
+    "completed": true,
+    "activities": ["avoided-plastic-bag", "used-reusable-bottle"]
+  },
+  {
+    "Id": 2,
+    "userId": 1,
+    "date": "2024-12-09",
+    "completed": true,
+    "activities": ["brought-reusable-cup", "refused-plastic-straw"]
+  },
+  {
+    "Id": 3,
+    "userId": 1,
+    "date": "2024-12-08",
+    "completed": true,
+    "activities": ["used-metal-utensils", "bought-bulk-items"]
+  },
+  {
+    "Id": 4,
+    "userId": 2,
+    "date": "2024-12-10",
+    "completed": true,
+    "activities": ["zero-waste-lunch", "composted-organics"]
+  },
+  {
+    "Id": 5,
+    "userId": 2,
+    "date": "2024-12-09",
+    "completed": true,
+    "activities": ["glass-containers", "avoided-packaged-foods"]
+  },
+  {
+    "Id": 6,
+    "userId": 3,
+    "date": "2024-12-10",
+    "completed": false,
+    "activities": []
+  },
+  {
+    "Id": 7,
+    "userId": 3,
+    "date": "2024-12-09",
+    "completed": true,
+    "activities": ["reusable-shopping-bag", "bamboo-toothbrush"]
+  }
+]

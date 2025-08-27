@@ -1,0 +1,92 @@
+[
+  {
+    "Id": 1,
+    "userId": 1,
+    "category": "wildlife",
+    "description": "Pod of dolphins playing in the waves!",
+    "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400",
+    "location": {
+      "lat": 33.7490,
+      "lng": -118.4065,
+      "address": "Redondo Beach, CA"
+    },
+    "timestamp": "2024-12-10T14:30:00Z",
+    "verified": true,
+    "xpAwarded": 10
+  },
+  {
+    "Id": 2,
+    "userId": 2,
+    "category": "pollution",
+    "description": "Plastic bottles washed up on shore",
+    "imageUrl": "https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=400",
+    "location": {
+      "lat": 34.0522,
+      "lng": -118.2437,
+      "address": "Santa Monica, CA"
+    },
+    "timestamp": "2024-12-10T09:15:00Z",
+    "verified": true,
+    "xpAwarded": 15
+  },
+  {
+    "Id": 3,
+    "userId": 3,
+    "category": "coral",
+    "description": "Healthy coral reef with vibrant colors",
+    "imageUrl": "https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400",
+    "location": {
+      "lat": 32.7157,
+      "lng": -117.1611,
+      "address": "La Jolla, CA"
+    },
+    "timestamp": "2024-12-09T16:45:00Z",
+    "verified": true,
+    "xpAwarded": 20
+  },
+  {
+    "Id": 4,
+    "userId": 1,
+    "category": "hazard",
+    "description": "Ghost net tangled on rocks",
+    "imageUrl": "https://images.unsplash.com/photo-1571116391715-c25ca8ad5065?w=400",
+    "location": {
+      "lat": 36.9741,
+      "lng": -122.0308,
+      "address": "Santa Cruz, CA"
+    },
+    "timestamp": "2024-12-09T11:20:00Z",
+    "verified": false,
+    "xpAwarded": 25
+  },
+  {
+    "Id": 5,
+    "userId": 4,
+    "category": "wildlife",
+    "description": "Sea turtle swimming near kelp forest",
+    "imageUrl": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400",
+    "location": {
+      "lat": 34.4140,
+      "lng": -119.8489,
+      "address": "Channel Islands, CA"
+    },
+    "timestamp": "2024-12-08T13:10:00Z",
+    "verified": true,
+    "xpAwarded": 15
+  },
+  {
+    "Id": 6,
+    "userId": 2,
+    "category": "coral",
+    "description": "Coral bleaching observed in shallow water",
+    "imageUrl": "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=400",
+    "location": {
+      "lat": 33.7701,
+      "lng": -118.1937,
+      "address": "Long Beach, CA"
+    },
+    "timestamp": "2024-12-08T08:30:00Z",
+    "verified": true,
+    "xpAwarded": 20
+  }
+]

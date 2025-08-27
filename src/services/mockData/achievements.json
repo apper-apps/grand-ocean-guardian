@@ -1,0 +1,92 @@
+[
+  {
+    "Id": 1,
+    "name": "First Sighting",
+    "description": "Submit your first marine life or pollution report",
+    "icon": "Eye",
+    "category": "sighting",
+    "xpReward": 50,
+    "rarity": "common"
+  },
+  {
+    "Id": 2,
+    "name": "Week Warrior",
+    "description": "Maintain a 7-day plastic-free streak",
+    "icon": "Calendar",
+    "category": "streak",
+    "xpReward": 100,
+    "rarity": "common"
+  },
+  {
+    "Id": 3,
+    "name": "Marine Detective",
+    "description": "Report 5 different types of marine life",
+    "icon": "Search",
+    "category": "sighting",
+    "xpReward": 150,
+    "rarity": "uncommon"
+  },
+  {
+    "Id": 4,
+    "name": "Plastic-Free Month",
+    "description": "Complete a 30-day plastic-free streak",
+    "icon": "Award",
+    "category": "streak",
+    "xpReward": 300,
+    "rarity": "rare"
+  },
+  {
+    "Id": 5,
+    "name": "Knowledge Seeker",
+    "description": "Complete your first ocean conservation quiz",
+    "icon": "Brain",
+    "category": "learning",
+    "xpReward": 75,
+    "rarity": "common"
+  },
+  {
+    "Id": 6,
+    "name": "Pollution Fighter",
+    "description": "Report 10 pollution incidents",
+    "icon": "Shield",
+    "category": "sighting",
+    "xpReward": 200,
+    "rarity": "uncommon"
+  },
+  {
+    "Id": 7,
+    "name": "Community Helper",
+    "description": "Reach the top 10 on the leaderboard",
+    "icon": "Users",
+    "category": "community",
+    "xpReward": 250,
+    "rarity": "rare"
+  },
+  {
+    "Id": 8,
+    "name": "Ocean Expert",
+    "description": "Score 100% on an expert-level quiz",
+    "icon": "GraduationCap",
+    "category": "learning",
+    "xpReward": 300,
+    "rarity": "rare"
+  },
+  {
+    "Id": 9,
+    "name": "Streak Master",
+    "description": "Achieve a 100-day plastic-free streak",
+    "icon": "Zap",
+    "category": "streak",
+    "xpReward": 500,
+    "rarity": "epic"
+  },
+  {
+    "Id": 10,
+    "name": "Guardian Legend",
+    "description": "Complete a full year (365 days) plastic-free",
+    "icon": "Crown",
+    "category": "streak",
+    "xpReward": 1000,
+    "rarity": "legendary"
+  }
+]
