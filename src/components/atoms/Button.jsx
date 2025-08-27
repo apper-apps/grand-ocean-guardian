@@ -20,7 +20,8 @@ const Button = forwardRef(({
     secondary: "bg-seafoam-500 text-white hover:bg-seafoam-600 focus:ring-seafoam-500 hover:scale-105 active:scale-95 shadow-card hover:shadow-elevated",
     outline: "border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white focus:ring-primary-500 hover:scale-105 active:scale-95",
     ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-gray-500 hover:scale-105 active:scale-95",
-    danger: "bg-red-500 text-white hover:bg-red-600 focus:ring-red-500 hover:scale-105 active:scale-95 shadow-card hover:shadow-elevated"
+    danger: "bg-red-500 text-white hover:bg-red-600 focus:ring-red-500 hover:scale-105 active:scale-95 shadow-card hover:shadow-elevated",
+    share: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 focus:ring-purple-500 hover:scale-105 active:scale-95 shadow-card hover:shadow-elevated"
   };
 
   const sizes = {

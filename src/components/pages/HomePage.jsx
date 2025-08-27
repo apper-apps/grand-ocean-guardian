@@ -1,23 +1,26 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import ShareButton from "@/components/atoms/ShareButton";
+import { userService } from "@/services/api/userService";
+import { sightingService } from "@/services/api/sightingService";
+import { streakService } from "@/services/api/streakService";
+import { impactService } from "@/services/api/impactService";
+import ApperIcon from "@/components/ApperIcon";
 import StatCard from "@/components/molecules/StatCard";
 import SightingCard from "@/components/molecules/SightingCard";
 import Card from "@/components/atoms/Card";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
-import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
-import { userService } from "@/services/api/userService";
-import { sightingService } from "@/services/api/sightingService";
-import { streakService } from "@/services/api/streakService";
-
+import Loading from "@/components/ui/Loading";
 const HomePage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [recentSightings, setRecentSightings] = useState([]);
-  const [streakData, setStreakData] = useState(null);
+const [streakData, setStreakData] = useState(null);
+  const [impactData, setImpactData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,15 +29,17 @@ const HomePage = () => {
       setLoading(true);
       setError(null);
 
-      const [userData, sightingsData, streakInfo] = await Promise.all([
+const [userData, sightingsData, streakInfo, impactInfo] = await Promise.all([
         userService.getCurrentUser(),
         sightingService.getRecentSightings(6),
-        streakService.getUserStreak(1)
+        streakService.getUserStreak(1),
+        impactService.getUserImpact(1)
       ]);
 
       setUser(userData);
       setRecentSightings(sightingsData);
-      setStreakData(streakInfo);
+setStreakData(streakInfo);
+      setImpactData(impactInfo);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -64,12 +69,14 @@ const HomePage = () => {
     return recentSightings.filter(s => s.userId === user?.Id).length;
   };
 
-  const getImpactStats = () => {
+const getImpactStats = () => {
     const userSightings = getUserSightings();
     return {
-      plasticItemsAvoided: (streakData?.currentStreak || 0) * 3,
+      plasticItemsAvoided: impactData?.plasticItemsAvoided || (streakData?.currentStreak || 0) * 3,
       pollutionReports: recentSightings.filter(s => s.category === "pollution").length,
-      wildlifeSpotted: recentSightings.filter(s => s.category === "wildlife").length
+      wildlifeSpotted: recentSightings.filter(s => s.category === "wildlife").length,
+      carbonReduced: impactData?.carbonReduced || 127,
+      fundingGenerated: impactData?.fundingGenerated || 234
     };
   };
 
@@ -110,11 +117,12 @@ const HomePage = () => {
           icon="Eye"
           variant="seafoam"
         />
-        <StatCard
+<StatCard
           title="Impact"
           value={impactStats.plasticItemsAvoided}
           subtitle="plastic items avoided"
           icon="Shield"
+          variant="coral"
         />
       </div>
 
@@ -218,34 +226,91 @@ const HomePage = () => {
         )}
       </Card>
 
-      {/* Conservation Impact */}
-      <Card className="p-6 bg-gradient-to-br from-green-50 to-blue-50">
-        <div className="text-center">
-          <ApperIcon name="Waves" size={32} className="text-primary-500 mx-auto mb-3" />
-          <h3 className="font-semibold text-gray-900 mb-2 font-display">Your Ocean Impact</h3>
-          <p className="text-gray-600 text-sm mb-4">
-            Every action counts toward protecting our marine ecosystems
-          </p>
-          
-          <div className="grid grid-cols-3 gap-4 text-center">
+{/* Enhanced Conservation Impact Dashboard */}
+      <Card className="p-0 overflow-hidden bg-gradient-to-br from-blue-500 via-teal-500 to-green-500 text-white relative">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute top-4 right-4 opacity-30 animate-wave">
+          <ApperIcon name="Waves" size={40} />
+        </div>
+        <div className="absolute bottom-4 left-6 opacity-20 animate-pulse">
+          <ApperIcon name="Fish" size={24} />
+        </div>
+        
+        <div className="relative p-6">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <div className="text-2xl font-bold text-coral-600 font-display">
+              <div className="flex items-center gap-2 mb-2">
+                <ApperIcon name="TrendingUp" size={24} />
+                <h3 className="text-xl font-bold font-display">Your Ocean Impact Story</h3>
+              </div>
+              <p className="text-white/80 text-sm">
+                You've helped avoid <span className="font-bold">{impactStats.plasticItemsAvoided} plastic bottles</span> this year! 🌊
+              </p>
+            </div>
+            <ShareButton 
+              data={impactStats} 
+              type="impact" 
+              variant="ghost" 
+              size="sm"
+              className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+            />
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+              <div className="text-2xl font-bold font-display mb-1">
                 {impactStats.plasticItemsAvoided}
               </div>
-              <div className="text-xs text-gray-600">Items Avoided</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-red-600 font-display">
-                {impactStats.pollutionReports}
+              <div className="text-xs text-white/80">Items Avoided</div>
+              <div className="flex items-center justify-center mt-2">
+                <ApperIcon name="Shield" size={16} className="text-green-300" />
               </div>
-              <div className="text-xs text-gray-600">Pollution Reports</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-green-600 font-display">
+            
+            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+              <div className="text-2xl font-bold font-display mb-1">
+                {impactStats.carbonReduced}kg
+              </div>
+              <div className="text-xs text-white/80">CO₂ Reduced</div>
+              <div className="flex items-center justify-center mt-2">
+                <ApperIcon name="Leaf" size={16} className="text-emerald-300" />
+              </div>
+            </div>
+            
+            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+              <div className="text-2xl font-bold font-display mb-1">
+                ${impactStats.fundingGenerated}
+              </div>
+              <div className="text-xs text-white/80">Ocean Protection</div>
+              <div className="flex items-center justify-center mt-2">
+                <ApperIcon name="Heart" size={16} className="text-pink-300" />
+              </div>
+            </div>
+            
+            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+              <div className="text-2xl font-bold font-display mb-1">
                 {impactStats.wildlifeSpotted}
               </div>
-              <div className="text-xs text-gray-600">Wildlife Spotted</div>
+              <div className="text-xs text-white/80">Wildlife Spotted</div>
+              <div className="flex items-center justify-center mt-2">
+                <ApperIcon name="Eye" size={16} className="text-blue-300" />
+              </div>
             </div>
+          </div>
+
+          <div className="mt-6 flex items-center justify-between">
+            <div className="text-xs text-white/70">
+              🌱 Equivalent to {Math.round(impactStats.carbonReduced / 2.3)} trees planted
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+              onClick={() => toast.info("Impact dashboard coming soon!")}
+            >
+              View Full Dashboard
+              <ApperIcon name="ArrowRight" size={14} />
+            </Button>
           </div>
         </div>
       </Card>
