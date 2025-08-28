@@ -198,10 +198,36 @@ export const authService = {
     };
   },
 
-  async getCurrentUser() {
+async getCurrentUser() {
     await delay(200);
+    
+    // Check if we have a current user
     if (!currentAuthUser) {
-      throw new Error('Not authenticated');
+      // Try to restore from token if available
+      const token = typeof localStorage !== 'undefined' ? localStorage.getItem('authToken') : null;
+      if (token) {
+        // In a real app, you would validate the token with the server
+        // For demo purposes, we'll check if it's a valid format
+        try {
+          // Simple token validation (in real app, verify with backend)
+          const tokenData = JSON.parse(atob(token.split('.')[1] || '{}'));
+          if (tokenData && tokenData.userId) {
+            // Find user in mock data
+            const allUsers = Object.values(TEST_USERS).concat(Object.values(usersData));
+            const user = allUsers.find(u => u.id === tokenData.userId || u.email === tokenData.email);
+            if (user) {
+              currentAuthUser = { ...user };
+              return { ...currentAuthUser };
+            }
+          }
+        } catch (error) {
+          // Invalid token, remove it
+          if (typeof localStorage !== 'undefined') {
+            localStorage.removeItem('authToken');
+          }
+        }
+      }
+      return null;
     }
     return { ...currentAuthUser };
   },

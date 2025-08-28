@@ -33,18 +33,28 @@ export const AuthProvider = ({ children }) => {
     checkAuthState();
   }, []);
 
-  const checkAuthState = async () => {
+const checkAuthState = async () => {
     try {
+      dispatch({ type: 'SET_LOADING', payload: true });
       const token = localStorage.getItem('authToken');
+      
       if (token) {
         const user = await authService.getCurrentUser();
-        dispatch({ type: 'SET_USER', payload: user });
+        if (user) {
+          dispatch({ type: 'SET_USER', payload: user });
+        } else {
+          // Token exists but user not found - cleanup
+          localStorage.removeItem('authToken');
+          dispatch({ type: 'SET_LOADING', payload: false });
+        }
       } else {
         dispatch({ type: 'SET_LOADING', payload: false });
       }
     } catch (error) {
       console.error('Auth check failed:', error);
+      // Clean up on any auth error
       localStorage.removeItem('authToken');
+      dispatch({ type: 'SET_ERROR', payload: null }); // Clear any previous errors
       dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
