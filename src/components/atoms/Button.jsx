@@ -8,6 +8,7 @@ const Button = forwardRef(({
   variant = "primary",
   size = "default",
   icon,
+  iconPosition = "left",
   loading = false,
   disabled,
   ...props
@@ -28,22 +29,25 @@ const Button = forwardRef(({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 shadow-card hover:shadow-elevated",
+"inline-flex items-center justify-center rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 shadow-card hover:shadow-elevated",
         variants[variant],
         sizes[size],
         className
       )}
       ref={ref}
-disabled={disabled || loading}
+      disabled={disabled || loading}
       {...props}
     >
-      {loading && (
+{loading && (
         <ApperIcon name="Loader2" size={16} className="animate-spin mr-2" />
       )}
-      {icon && !loading && (
+      {icon && !loading && iconPosition === "left" && (
         <ApperIcon name={icon} size={16} className="mr-2" />
       )}
       {children}
+      {icon && !loading && iconPosition === "right" && (
+        <ApperIcon name={icon} size={16} className="ml-2" />
+      )}
     </button>
   );
 });
