@@ -1,12 +1,15 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { cn } from "@/utils/cn";
+import ApperIcon from "@/components/ApperIcon";
 
-const Button = forwardRef(({
-  className,
-  variant = "default",
-  size = "md",
-  disabled,
+const Button = forwardRef(({ 
   children,
+  className,
+  variant = "primary",
+  size = "default",
+  icon,
+  loading = false,
+  disabled,
   ...props
 }, ref) => {
   const variants = {
@@ -31,9 +34,15 @@ const Button = forwardRef(({
         className
       )}
       ref={ref}
-      disabled={disabled}
+disabled={disabled || loading}
       {...props}
     >
+      {loading && (
+        <ApperIcon name="Loader2" size={16} className="animate-spin mr-2" />
+      )}
+      {icon && !loading && (
+        <ApperIcon name={icon} size={16} className="mr-2" />
+      )}
       {children}
     </button>
   );
